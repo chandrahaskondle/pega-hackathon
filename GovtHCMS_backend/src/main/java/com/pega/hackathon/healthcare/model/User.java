@@ -26,6 +26,9 @@ public class User  implements Serializable {
     private String lastName;
     private String emailAddress;
     private String phoneNumber;
+    @OneToOne
+    @JoinColumn(referencedColumnName = "id")
+    private Address address;
 
 
 }
