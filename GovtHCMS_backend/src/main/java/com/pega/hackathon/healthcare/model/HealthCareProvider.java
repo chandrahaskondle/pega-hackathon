@@ -14,4 +14,5 @@ import javax.persistence.Entity;
 @DiscriminatorValue("healthcare_provider")
 public class HealthCareProvider extends User {
 
+    private String associatedInstitute;
 }
