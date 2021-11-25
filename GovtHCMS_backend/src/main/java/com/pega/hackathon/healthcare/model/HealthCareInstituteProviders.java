@@ -7,20 +7,21 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-public class Address {
+
+public class HealthCareInstituteProviders {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
-    private String houseNumber;
-    private String addressLine1;
-    private String addressLine2;
-    private String Country;
-    private String city;
-    private String state;
-    private String postalCode;
+    private String instituteName;
+
+    @Column(unique = true)
+    private String workEmail;
+
+    private String userInstituteId;
+
 }

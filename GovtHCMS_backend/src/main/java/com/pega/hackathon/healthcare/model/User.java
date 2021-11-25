@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-public class User  implements Serializable {
+public class User implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
@@ -26,6 +26,7 @@ public class User  implements Serializable {
     private String lastName;
     private String emailAddress;
     private String phoneNumber;
+    private String gender;
     @OneToOne
     @JoinColumn(referencedColumnName = "id")
     private Address address;

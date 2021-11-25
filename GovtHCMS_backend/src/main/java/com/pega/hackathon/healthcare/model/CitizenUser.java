@@ -17,10 +17,9 @@ import java.util.Date;
 
 public class CitizenUser extends User {
 
-
-    @OneToOne
-    private AadharDetails aadharDetails;
+    @Column(unique = true)
+    private String aadharNumber;
     private Date dateOfBirth;
-
+    private Boolean isKycVerified;
 
 }
