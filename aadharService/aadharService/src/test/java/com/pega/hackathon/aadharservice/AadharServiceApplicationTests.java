@@ -1,10 +1,10 @@
-package com.pega.hackathon.healthcare;
+package com.pega.hackathon.aadharservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GovtHcmsBackendApplicationTests {
+class AadharServiceApplicationTests {
 
     @Test
     void contextLoads() {
