@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class AadharDetails   implements Serializable {
 
     @Id
-    @Column(name = "aadharId", unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     private String aadharId;
     private String phoneNumber;
 

@@ -7,27 +7,17 @@ import java.util.Date;
 @Entity
 public class Vaccination implements Serializable {
 
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
+    @Column(unique = true, nullable = false)
     private int id;
     @ManyToOne
-    @JoinColumn(name = "id")
     private Vaccine vaccine;
-
-    public Date getDateOfVaccination() {
-        return dateOfVaccination;
-    }
-
-    public void setDateOfVaccination(Date dateOfVaccination) {
-        this.dateOfVaccination = dateOfVaccination;
-    }
-
     private Date dateOfVaccination;
     private Date dateOfRegistration;
     @ManyToOne
-    @JoinColumn(name = "id")
     private CitizenUser user;
     @ManyToOne
-    @JoinColumn(name = "id")
     private HealthCareProvider healthCareProvider;
     private String location;
     private String notes;

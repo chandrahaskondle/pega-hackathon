@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -17,10 +14,13 @@ import java.io.Serializable;
 public class Illness implements Serializable {
 
 
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
+    @Column(name = "id", unique = true, nullable = false)
+    private int id;
     private String illnessName;
     @ManyToOne
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(referencedColumnName = "id")
     private CitizenUser user;
     private String typeOfIllness;
     private String symptoms;
