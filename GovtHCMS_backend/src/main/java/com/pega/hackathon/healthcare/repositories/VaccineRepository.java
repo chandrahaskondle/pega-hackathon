@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VaccineRepository extends CrudRepository<Vaccine, Integer> {
+    Vaccine findByName(String name);
 }

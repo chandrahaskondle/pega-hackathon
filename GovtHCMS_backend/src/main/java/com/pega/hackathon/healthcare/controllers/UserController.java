@@ -2,15 +2,13 @@ package com.pega.hackathon.healthcare.controllers;
 
 
 import com.pega.hackathon.healthcare.model.*;
-import com.pega.hackathon.healthcare.repositories.CitizenUserRepository;
-import com.pega.hackathon.healthcare.repositories.IllnessRepository;
-import com.pega.hackathon.healthcare.repositories.VaccinationDriveRepository;
-import com.pega.hackathon.healthcare.repositories.VaccinationRepository;
+import com.pega.hackathon.healthcare.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user/citizen")
@@ -29,6 +27,9 @@ public class UserController {
     @Autowired
     private VaccinationDriveRepository vaccinationDriveRepository;
 
+    @Autowired
+    private CertificateRepository certificateRepository;
+
     public String login() {
         return "";
     }
@@ -45,14 +46,15 @@ public class UserController {
         return user.getFirstName();
     }
 
-    @PostMapping(path = "/{userName}/updateVax", consumes = "application/json")
-    private String updateVaccinationHistory(@PathVariable String userName, @RequestBody Vaccination vaccination) {
+    @PostMapping(path = "/{userName}/vaccination/history", consumes = "application/json")
+    private String createVaccinationHistory(@PathVariable String userName, @RequestBody Vaccination vaccination) {
         this.vaccinationRepository.save(vaccination);
         return HttpStatus.OK.toString();
     }
 
-    @PostMapping(path = "/{userName}/registerVax", consumes = "application/json")
-    private String registerForVaccination(@PathVariable String userName, @RequestBody VaccinationDrive vaccinationDrive) {
+    @PostMapping(path = "/{userName}/vaccination/register", consumes = "application/json")
+    private String registerForVaccinationDrive(@PathVariable String userName,
+                                               @RequestBody VaccinationDrive vaccinationDrive) {
         vaccinationDrive.setIsSlotAvailable(false);
         this.vaccinationDriveRepository.save(vaccinationDrive);
         CitizenUser user = (CitizenUser) citizenUserRepository.findByUserName(userName);
@@ -74,14 +76,14 @@ public class UserController {
         return HttpStatus.OK.toString();
     }
 
-    @GetMapping("/{userName}/vaxHistory")
+    @GetMapping("/{userName}/vaccination/history")
     private Vaccination[] getVaccinationHistory(@PathVariable String userName) {
         CitizenUser user = (CitizenUser) this.citizenUserRepository.findByUserName(userName);
         return this.vaccinationRepository.findByUser(user);
     }
 
-    @GetMapping("/{userName}/vaxCert")
-    private String getVaccinationCertificate(@PathVariable String userName) {
-        return "";
+    @GetMapping("/{userName}/vaccination/certificate")
+    private Certificate getVaccinationCertificate(@PathVariable String userName) {
+        return this.certificateRepository.findByUserName(userName);
     }
 }
