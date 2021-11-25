@@ -1,4 +1,4 @@
-package com.pega.hackathon.healthcare;
+package com.pega.hackathon.healthcare.service;
 
 import com.pega.hackathon.healthcare.model.MyUserDetails;
 import com.pega.hackathon.healthcare.model.User;

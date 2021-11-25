@@ -6,60 +6,58 @@ import com.pega.hackathon.healthcare.repositories.CitizenUserRepository;
 import com.pega.hackathon.healthcare.repositories.IllnessRepository;
 import com.pega.hackathon.healthcare.repositories.VaccinationDriveRepository;
 import com.pega.hackathon.healthcare.repositories.VaccinationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
-@RestController
+@RestController("/user")
 @CrossOrigin
 public class UserController {
 
+    @Autowired
     private CitizenUserRepository citizenUserRepository;
-    private VaccinationRepository vaccinationRepository;
-    private IllnessRepository illnessRepository;
-    private VaccinationDriveRepository vaccinationDriveRepository;
 
-    public UserController(CitizenUserRepository citizenUserRepository,
-                          VaccinationRepository vaccinationRepository,
-                          IllnessRepository illnessRepository,
-                          VaccinationDriveRepository vaccinationDriveRepository) {
-        this.citizenUserRepository = citizenUserRepository;
-        this.vaccinationRepository = vaccinationRepository;
-        this.illnessRepository = illnessRepository;
-        this.vaccinationDriveRepository = vaccinationDriveRepository;
-    }
+    @Autowired
+    private VaccinationRepository vaccinationRepository;
+
+    @Autowired
+    private IllnessRepository illnessRepository;
+
+    @Autowired
+    private VaccinationDriveRepository vaccinationDriveRepository;
 
     public String login() {
         return "";
     }
 
-    @PostMapping(path = "/user", consumes = "application/json")
+    @PostMapping(path = "/register", consumes = "application/json")
     public String register(@RequestBody CitizenUser citizenUser) {
         this.citizenUserRepository.save(citizenUser);
         return HttpStatus.OK.toString();
     }
 
-    @GetMapping("/user/{userName}")
+    @GetMapping("/{userName}")
     public String getUser(@PathVariable String userName) {
         CitizenUser user = (CitizenUser) citizenUserRepository.findByUserName(userName);
         return user.getFirstName();
     }
 
-    @PostMapping(path = "/user/{userName}/updateVax", consumes = "application/json")
+    @PostMapping(path = "/{userName}/updateVax", consumes = "application/json")
     private String updateVaccinationHistory(@PathVariable String userName, @RequestBody Vaccination vaccination) {
         this.vaccinationRepository.save(vaccination);
         return HttpStatus.OK.toString();
     }
 
-    @PostMapping(path = "/user/{userName}/registerVax", consumes = "application/json")
+    @PostMapping(path = "/{userName}/registerVax", consumes = "application/json")
     private String registerForVaccination(@PathVariable String userName, @RequestBody VaccinationDrive vaccinationDrive) {
         vaccinationDrive.setIsSlotAvailable(false);
         this.vaccinationDriveRepository.save(vaccinationDrive);
         CitizenUser user = (CitizenUser) citizenUserRepository.findByUserName(userName);
 
         Vaccination vax = new Vaccination();
-        vax.setLocation(vaccinationDrive.getLocation());
+        vax.setLocation(vaccinationDrive.getAddress().toString());
         vax.setHealthCareProvider(vaccinationDrive.getHealthCareProvider());
         vax.setDateOfRegistration(new Date());
         vax.setVaccine(vaccinationDrive.getVaccine());
@@ -69,19 +67,19 @@ public class UserController {
         return HttpStatus.OK.toString();
     }
 
-    @PostMapping(path = "/user/{userName}/reportIllness", consumes = "application/json")
+    @PostMapping(path = "/{userName}/reportIllness", consumes = "application/json")
     private String reportIllness(@PathVariable String userName, @RequestBody Illness illness) {
         this.illnessRepository.save(illness);
         return HttpStatus.OK.toString();
     }
 
-    @GetMapping("/user/{userName}/vaxHistory")
+    @GetMapping("/{userName}/vaxHistory")
     private Vaccination[] getVaccinationHistory(@PathVariable String userName) {
         CitizenUser user = (CitizenUser) this.citizenUserRepository.findByUserName(userName);
         return this.vaccinationRepository.findByUser(user);
     }
 
-    @GetMapping("/user/{userName}/vaxCert")
+    @GetMapping("/{userName}/vaxCert")
     private String getVaccinationCertificate(@PathVariable String userName) {
         return "";
     }

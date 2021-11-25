@@ -1,6 +1,7 @@
 package com.pega.hackathon.healthcare.controllers;
 
 import com.pega.hackathon.healthcare.model.CitizenUser;
+import com.pega.hackathon.healthcare.model.HealthCareProvider;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -11,7 +12,7 @@ public class HealthCareProviderController {
     }
 
     @PostMapping
-    public String register(@RequestBody CitizenUser citizenUser) {
+    public String register(@RequestBody HealthCareProvider healthCareProvider) {
         return "";
     }
 
