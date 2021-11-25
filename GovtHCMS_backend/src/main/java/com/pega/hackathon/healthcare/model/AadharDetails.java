@@ -1,19 +1,25 @@
 package com.pega.hackathon.healthcare.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
+@NoArgsConstructor
+@Getter
+@Setter
 public class AadharDetails {
-    public String getAadharId() {
-        return aadharId;
-    }
-
-    public void setAadharId(String aadharId) {
-        this.aadharId = aadharId;
-    }
 
     @Id
     private String aadharId;
     private String phoneNumber;
+
+    @OneToOne(mappedBy = "aadharDetails", optional = false)
+    private CitizenUser citizenUser;
+
 }

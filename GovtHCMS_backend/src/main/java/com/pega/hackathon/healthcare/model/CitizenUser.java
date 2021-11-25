@@ -1,27 +1,27 @@
 package com.pega.hackathon.healthcare.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@NoArgsConstructor
+@Getter
+@Setter
+@DiscriminatorValue("citizen_user")
+
 public class CitizenUser extends User {
 
-    public CitizenUser(int id, String userName, String password) {
-        super(id, userName, password);
-    }
 
-    public AadharDetails getAadharDetails() {
-        return aadharDetails;
-    }
-
-    public void setAadharDetails(AadharDetails aadharDetails) {
-        this.aadharDetails = aadharDetails;
-    }
-
+    @OneToOne
+    @JoinColumn(name = "aadharId", nullable = false)
     private AadharDetails aadharDetails;
-    private   Date dateOfBirth;
+    private Date dateOfBirth;
 
 
 }

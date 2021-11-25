@@ -1,10 +1,17 @@
 package com.pega.hackathon.healthcare.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-public class HealthCareProvider extends User{
-    public HealthCareProvider(int id, String userName, String password) {
-        super(id, userName, password);
-    }
+@NoArgsConstructor
+@Getter
+@Setter
+@DiscriminatorValue("healthcare_provider")
+public class HealthCareProvider extends User {
+
 }

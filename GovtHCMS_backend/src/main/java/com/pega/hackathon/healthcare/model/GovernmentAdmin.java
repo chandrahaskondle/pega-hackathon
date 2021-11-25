@@ -1,12 +1,20 @@
 package com.pega.hackathon.healthcare.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class GovernmentAdmin extends User{
+@NoArgsConstructor
+@Getter
+@Setter
+@DiscriminatorValue("government_admin")
 
-    public GovernmentAdmin(int id, String userName, String password) {
-        super(id, userName, password);
-    }
+public class GovernmentAdmin extends User {
+
 }
+
