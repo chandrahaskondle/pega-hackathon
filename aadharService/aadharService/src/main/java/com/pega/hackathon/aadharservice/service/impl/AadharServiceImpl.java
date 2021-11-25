@@ -47,7 +47,7 @@ public class AadharServiceImpl implements AadharService {
         } else {
             return "Invalid Aadhar Number";
         }
-        return null;
+        return "Otp sent Successfully";
     }
 
     @Override
