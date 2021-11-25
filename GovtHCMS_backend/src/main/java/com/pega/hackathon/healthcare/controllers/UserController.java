@@ -1,15 +1,15 @@
 package com.pega.hackathon.healthcare.controllers;
 
 
-import com.pega.hackathon.healthcare.model.CitizenUser;
-import com.pega.hackathon.healthcare.model.Illness;
-import com.pega.hackathon.healthcare.model.User;
-import com.pega.hackathon.healthcare.model.Vaccination;
+import com.pega.hackathon.healthcare.model.*;
 import com.pega.hackathon.healthcare.repositories.CitizenUserRepository;
 import com.pega.hackathon.healthcare.repositories.IllnessRepository;
+import com.pega.hackathon.healthcare.repositories.VaccinationDriveRepository;
 import com.pega.hackathon.healthcare.repositories.VaccinationRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @RestController
 @CrossOrigin
@@ -18,13 +18,16 @@ public class UserController {
     private CitizenUserRepository citizenUserRepository;
     private VaccinationRepository vaccinationRepository;
     private IllnessRepository illnessRepository;
+    private VaccinationDriveRepository vaccinationDriveRepository;
 
     public UserController(CitizenUserRepository citizenUserRepository,
                           VaccinationRepository vaccinationRepository,
-                          IllnessRepository illnessRepository) {
+                          IllnessRepository illnessRepository,
+                          VaccinationDriveRepository vaccinationDriveRepository) {
         this.citizenUserRepository = citizenUserRepository;
         this.vaccinationRepository = vaccinationRepository;
         this.illnessRepository = illnessRepository;
+        this.vaccinationDriveRepository = vaccinationDriveRepository;
     }
 
     public String login() {
@@ -33,7 +36,8 @@ public class UserController {
 
     @PostMapping(path = "/user", consumes = "application/json")
     public String register(@RequestBody CitizenUser citizenUser) {
-        return "";
+        this.citizenUserRepository.save(citizenUser);
+        return HttpStatus.OK.toString();
     }
 
     @GetMapping("/user/{userName}")
@@ -49,8 +53,19 @@ public class UserController {
     }
 
     @PostMapping(path = "/user/{userName}/registerVax", consumes = "application/json")
-    private String registerForVaccination(@PathVariable String userName, @RequestBody Vaccination vaccination) {
-        this.vaccinationRepository.save(vaccination);
+    private String registerForVaccination(@PathVariable String userName, @RequestBody VaccinationDrive vaccinationDrive) {
+        vaccinationDrive.setIsSlotAvailable(false);
+        this.vaccinationDriveRepository.save(vaccinationDrive);
+        CitizenUser user = (CitizenUser) citizenUserRepository.findByUserName(userName);
+
+        Vaccination vax = new Vaccination();
+        vax.setLocation(vaccinationDrive.getLocation());
+        vax.setHealthCareProvider(vaccinationDrive.getHealthCareProvider());
+        vax.setDateOfRegistration(new Date());
+        vax.setVaccine(vaccinationDrive.getVaccine());
+        vax.setUser(user);
+        this.vaccinationRepository.save(vax);
+
         return HttpStatus.OK.toString();
     }
 
