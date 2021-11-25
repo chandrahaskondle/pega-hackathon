@@ -1,7 +1,6 @@
 package com.pega.hackathon.healthcare.repositories;
 
 import com.pega.hackathon.healthcare.model.CitizenUser;
-import com.pega.hackathon.healthcare.model.User;
 import com.pega.hackathon.healthcare.model.Vaccination;
 import org.springframework.data.repository.CrudRepository;
 
