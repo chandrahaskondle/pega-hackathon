@@ -58,8 +58,8 @@ public class AadharServiceImpl implements AadharService {
             response.setResponseMessage("Invalid otp");
         } else {
             OtpDetails otpDetails = otpDetailsRepo.findByAadhar_AadharNumberAndOtp(aadharNumber, otp);
-            if (otp != null && otpDetails.getOtp() != null && otpDetails.getAadhar() != null) {
-                long diff = otpDetails.getCreatedDate().getTime() - System.currentTimeMillis();
+            if (otpDetails.getOtp() != null && otpDetails.getAadhar() != null) {
+                long diff = System.currentTimeMillis() - otpDetails.getCreatedDate().getTime();
                 long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
                 if (minutes > 5) {
                     response.setResponseMessage("otp expired");
