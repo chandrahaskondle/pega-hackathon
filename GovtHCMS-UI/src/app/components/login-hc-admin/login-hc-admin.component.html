@@ -1,0 +1,54 @@
+<div class="login-form">
+    <mdb-card>
+        <mdb-card-header class="info-color white-text text-center py-4">
+            <h5>
+                <strong>HealthCare Admin Login</strong>
+            </h5>
+        </mdb-card-header>
+
+        <mdb-card-body class="px-lg-5 pt-0">
+            <form class="text-center" style="color: #757575;">
+                <div class="md-form">
+                    <input type="email" id="materialLoginFormEmail" class="form-control" mdbInput>
+                    <label for="materialLoginFormEmail">Mobile Number</label>
+                </div>
+
+                <div class="md-form">
+                    <input type="password" id="materialLoginFormPassword" class="form-control" mdbInput>
+                    <label for="materialLoginFormPassword">Secrect Code</label>
+                </div>
+
+                <div class="btn-group" mdbDropdown>
+                    <button mdbDropdownToggle mdbBtn color="info" class="dropdown-toggle waves-light"
+                        type="button" mdbWavesEffect>
+                        Select your HealthCare Institute
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Apollo Hospitals</a>
+                        <a class="dropdown-item" href="#">Care Hospitals</a>
+                        <a class="dropdown-item" href="#">Yashodha Hospitals</a>
+                    </div>
+                </div>
+                
+                <mat-form-field appearance="fill">
+                    <mat-label>Select an option</mat-label>
+                    <mat-select [(value)]="selected">
+                      <mat-option>None</mat-option>
+                      <mat-option value="option1">Option 1</mat-option>
+                      <mat-option value="option2">Option 2</mat-option>
+                      <mat-option value="option3">Option 3</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  
+                  <p>You selected: {{selected}}</p>
+
+                <button mdbBtn color="info" outline="true" rounded="true" block="true"
+                    class="my-4 waves-effect z-depth-0" mdbWavesEffect type="submit">Sign in</button>
+
+                <p>Not a member?
+                    <a routerLink="/register-admins" routerLinkActive="active">Register</a>
+                </p>
+            </form>
+        </mdb-card-body>
+    </mdb-card>
+</div>

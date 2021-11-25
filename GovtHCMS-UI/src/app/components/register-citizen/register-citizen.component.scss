@@ -1,0 +1,16 @@
+.register-citizen-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .card {
+        width: 450px !important;
+    }
+
+    @media (max-width: 400px) {
+        .card {
+            width: 300px !important;
+        }
+    }
+}
+
