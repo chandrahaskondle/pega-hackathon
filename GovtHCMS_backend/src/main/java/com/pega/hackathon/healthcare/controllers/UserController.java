@@ -6,6 +6,7 @@ import com.pega.hackathon.healthcare.repositories.CitizenUserRepository;
 import com.pega.hackathon.healthcare.repositories.IllnessRepository;
 import com.pega.hackathon.healthcare.repositories.VaccinationDriveRepository;
 import com.pega.hackathon.healthcare.repositories.VaccinationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
