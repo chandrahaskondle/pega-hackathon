@@ -8,14 +8,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import java.io.Serializable;
 
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
-public class AadharDetails {
+public class AadharDetails   implements Serializable {
 
     @Id
+    @Column(name = "aadharId", unique = true, nullable = false)
     private String aadharId;
     private String phoneNumber;
 

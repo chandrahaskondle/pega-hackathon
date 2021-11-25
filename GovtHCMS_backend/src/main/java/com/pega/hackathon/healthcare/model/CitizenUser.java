@@ -19,7 +19,6 @@ public class CitizenUser extends User {
 
 
     @OneToOne
-    @JoinColumn(name = "aadharId", nullable = false)
     private AadharDetails aadharDetails;
     private Date dateOfBirth;
 

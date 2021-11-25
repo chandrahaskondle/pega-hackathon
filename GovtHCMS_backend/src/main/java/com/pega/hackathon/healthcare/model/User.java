@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -13,10 +14,11 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class User {
+public class User  implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
+    @Column(name = "id", unique = true, nullable = false)
     private int id;
     private String userName;
     private String password;
