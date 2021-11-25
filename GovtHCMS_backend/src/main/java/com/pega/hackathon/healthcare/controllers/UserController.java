@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 
 @RestController
+@RequestMapping("/user/citizen")
 @CrossOrigin
 public class UserController {
 
@@ -30,29 +31,30 @@ public class UserController {
         this.vaccinationDriveRepository = vaccinationDriveRepository;
     }
 
+
     public String login() {
         return "";
     }
 
-    @PostMapping(path = "/user", consumes = "application/json")
+    @PostMapping()
     public String register(@RequestBody CitizenUser citizenUser) {
         this.citizenUserRepository.save(citizenUser);
         return HttpStatus.OK.toString();
     }
 
-    @GetMapping("/user/{userName}")
+    @GetMapping("/{userName}")
     public String getUser(@PathVariable String userName) {
         CitizenUser user = (CitizenUser) citizenUserRepository.findByUserName(userName);
         return user.getFirstName();
     }
 
-    @PostMapping(path = "/user/{userName}/updateVax", consumes = "application/json")
+    @PostMapping(path = "/{userName}/updateVax", consumes = "application/json")
     private String updateVaccinationHistory(@PathVariable String userName, @RequestBody Vaccination vaccination) {
         this.vaccinationRepository.save(vaccination);
         return HttpStatus.OK.toString();
     }
 
-    @PostMapping(path = "/user/{userName}/registerVax", consumes = "application/json")
+    @PostMapping(path = "/{userName}/registerVax", consumes = "application/json")
     private String registerForVaccination(@PathVariable String userName, @RequestBody VaccinationDrive vaccinationDrive) {
         vaccinationDrive.setIsSlotAvailable(false);
         this.vaccinationDriveRepository.save(vaccinationDrive);
@@ -69,19 +71,19 @@ public class UserController {
         return HttpStatus.OK.toString();
     }
 
-    @PostMapping(path = "/user/{userName}/reportIllness", consumes = "application/json")
+    @PostMapping(path = "/{userName}/reportIllness", consumes = "application/json")
     private String reportIllness(@PathVariable String userName, @RequestBody Illness illness) {
         this.illnessRepository.save(illness);
         return HttpStatus.OK.toString();
     }
 
-    @GetMapping("/user/{userName}/vaxHistory")
+    @GetMapping("/{userName}/vaxHistory")
     private Vaccination[] getVaccinationHistory(@PathVariable String userName) {
         CitizenUser user = (CitizenUser) this.citizenUserRepository.findByUserName(userName);
         return this.vaccinationRepository.findByUser(user);
     }
 
-    @GetMapping("/user/{userName}/vaxCert")
+    @GetMapping("/{userName}/vaxCert")
     private String getVaccinationCertificate(@PathVariable String userName) {
         return "";
     }
