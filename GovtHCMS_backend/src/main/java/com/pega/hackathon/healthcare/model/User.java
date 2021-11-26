@@ -20,12 +20,19 @@ public class User implements Serializable {
     @Id
     @Column(name = "id", unique = true, nullable = false)
     private int id;
+    @Column(unique = true, nullable = false)
     private String userName;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private String firstName;
+    @Column(nullable = false)
     private String lastName;
+    @Column(nullable = false)
     private String emailAddress;
+    @Column(nullable = false)
     private String phoneNumber;
+    @Column(nullable = false)
     private String gender;
     @OneToOne
     @JoinColumn(referencedColumnName = "id")

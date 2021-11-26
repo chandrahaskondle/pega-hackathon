@@ -18,6 +18,7 @@ public class Illness implements Serializable {
     @Id
     @Column(name = "id", unique = true, nullable = false)
     private int id;
+    @Column(unique = true)
     private String illnessName;
     @ManyToOne
     @JoinColumn(referencedColumnName = "id")

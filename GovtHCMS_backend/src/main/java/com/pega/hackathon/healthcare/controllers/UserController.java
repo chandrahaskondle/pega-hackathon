@@ -5,9 +5,16 @@ import com.pega.hackathon.healthcare.model.*;
 import com.pega.hackathon.healthcare.repositories.*;
 import com.pega.hackathon.healthcare.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Random;
 
@@ -45,6 +52,7 @@ public class UserController {
         userService.registerUser(citizenUser);
         return HttpStatus.OK.toString();
     }
+
     @PostMapping(path = "/loginUser", consumes = "application/json")
     public String loginUser(@RequestBody MyUserDetails myUserDetails) {
         return HttpStatus.OK.toString();
@@ -94,8 +102,17 @@ public class UserController {
         return this.vaccinationRepository.findByUser(user);
     }
 
-    @GetMapping("/{userName}/vaccination/certificate")
-    private Certificate getVaccinationCertificate(@PathVariable String userName) {
-        return this.certificateRepository.findByUserName(userName);
+    @GetMapping(value = "/certificate",produces = MediaType.APPLICATION_PDF_VALUE)
+    private ResponseEntity getVaccinationCertificate(@RequestParam int certificateId) throws IOException {
+        ByteArrayInputStream bis = this.userService.generatePDF(certificateId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=citiesreport.pdf");
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bis));
     }
+
+
 }
