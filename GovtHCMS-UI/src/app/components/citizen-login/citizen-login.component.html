@@ -1,4 +1,4 @@
-<div class="login-form">    
+<div class="login-form">
     <mdb-card>
         <mdb-card-header class="info-color white-text text-center py-4">
             <h5>
@@ -7,24 +7,23 @@
         </mdb-card-header>
 
         <mdb-card-body class="px-lg-5 pt-0">
-            <form class="text-center" style="color: #757575;">
+            <form [formGroup]="citizenLoginForm" (ngSubmit)="citizenLogin(citizenLoginForm.value)" class="text-center" style="color: #757575;">
 
                 <div class="md-form">
-                    <input type="email" id="materialLoginFormEmail" class="form-control" mdbInput>
-                    <label for="materialLoginFormEmail">Mobile Number</label>
+                    <input type="text" formControlName="phoneNumber" class="form-control" mdbInput>
+                    <label for="phoneNumber">Mobile Number</label>
                 </div>
 
                 <div class="md-form">
-                    <input type="password" id="materialLoginFormPassword" class="form-control" mdbInput>
-                    <label for="materialLoginFormPassword">Password</label>
+                    <input type="password" formControlName="password" class="form-control" mdbInput>
+                    <label for="password">Password</label>
                 </div>
 
                 <button mdbBtn color="info" outline="true" rounded="true" block="true"
-                routerLink="/citizen-dashboard"
                     class="my-4 waves-effect z-depth-0" mdbWavesEffect type="submit">Sign in</button>
 
                 <p>Not a member?
-                    <a routerLink="/citizens-registration"  routerLinkActive="active">Register</a>
+                    <a routerLink="/citizens-registration" routerLinkActive="active">Register</a>
                 </p>
             </form>
         </mdb-card-body>

@@ -6,7 +6,7 @@
             </mat-panel-title>
         </mat-expansion-panel-header>
 
-        <form class="text-center border border-light p-5" style="width: 450px; left: 5%; position: relative; top: 10px">
+        <form class="text-center border border-light p-5">
             <select class="browser-default custom-select mb-4">
                 <option value="" selected disabled>Select Your Vaccine</option>
                 <option value="2">Covaxin</option>
@@ -16,24 +16,61 @@
             </select>
             <input type="text" id="illness" class="form-control mb-4" placeholder="Enter your Illness">
             <div class="display-flex">
-                Enter Date: 
-                <input style="width: 75%; margin-left: 5px;" type="date" id="date2" class="form-control" placeholder="Enter Date">
+                Enter Date:
+                <input style="width: 75%; margin-left: 5px;" type="date" id="date2" class="form-control"
+                    placeholder="Enter Date">
             </div>
             <br>
             <button type="button" class="btn btn-primary">Submit</button>
         </form>
-
-
-
     </mat-expansion-panel>
+
     <mat-expansion-panel>
         <mat-expansion-panel-header>
             <mat-panel-title>
                 <strong>Find your Slot for Vaccine</strong>
             </mat-panel-title>
         </mat-expansion-panel-header>
+        <!-- style="width: 450px; margin: 1% 5%; position: relative;" -->
+        <form class="text-center border border-light p-5">
+            <select class="browser-default custom-select mb-4">
+                <option value="" selected disabled>Select Vaccine</option>
+                <option value="2">Covaxin</option>
+                <option value="3">Covishield</option>
+                <option value="3">Sputnik</option>
+                <option value="4">Pfizer</option>
+            </select>
+            <input type="text" id="illness" class="form-control mb-4" placeholder="Enter your Pincode">
+            <div class="display-flex">
+                Booking Date:
+                <input style="width: 75%; margin-left: 5px;" type="date" id="date2" class="form-control">
+            </div>
+            <br>
+            <button type="button" class="btn btn-primary">Submit</button>
+        </form>
 
+        <div class="display-flex">
+            <table style="width: 100%; margin: 20px ;">
+                <colgroup>
+                    <col span="1" style="width: 25%;">
+                    <col span="1" style="width: 50%;">
+                    <col span="1" style="width: 25%;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th style="background-color: #b9b9b9">Avaliable Quantity</th>
+                        <th style="background-color: #b9b9b9">HealthCare Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let vaccine of vaccinesAvaliable">
+                        <td>{{vaccine.quantity}}</td>
+                        <td>{{vaccine.address}}</td>
+                        <td><button type="button" class="btn btn-primary btn-sm" (click)="bookSlot()">Book Your Slot</button></td>
+                    </tr>
+                </tbody>
+            </table>
 
-
+        </div>
     </mat-expansion-panel>
 </mat-accordion>
