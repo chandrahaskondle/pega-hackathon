@@ -23,4 +23,15 @@ public class Address {
     private String city;
     private String state;
     private String postalCode;
+
+    @Override
+    public String toString() {
+        return houseNumber + ", "
+                + addressLine1 + ", "
+                + addressLine2 + ", "
+                + city + ", "
+                + state + ", "
+                + Country + ", "
+                + "( " + postalCode + ")";
+    }
 }
