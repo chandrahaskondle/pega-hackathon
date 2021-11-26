@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {MatAccordion} from '@angular/material/expansion';
+import { MatAccordion } from '@angular/material/expansion';
+
 
 @Component({
   selector: 'app-citizen-dashboard',
@@ -8,7 +9,7 @@ import {MatAccordion} from '@angular/material/expansion';
 })
 export class CitizenDashboardComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
-  panelOpenState = false;
+
   constructor() { }
 
   ngOnInit(): void {

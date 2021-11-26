@@ -6,3 +6,12 @@ html, body {
     margin: 0;
     font-family: sans-serif;
 }
+
+.display-flex {
+    display: flex;
+    align-items: center;
+}
+
+.mat-expansion-panel-body {
+    background-color: #dd606096;
+}
