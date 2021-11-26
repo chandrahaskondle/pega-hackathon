@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 @RestController
@@ -101,9 +103,11 @@ public class UserController {
     }
 
     @GetMapping("/{userName}/vaccination/history")
-    private Vaccination[] getVaccinationHistory(@PathVariable String userName) {
+    private ResponseEntity<List<Vaccination>> getVaccinationHistory(@PathVariable String userName) {
         CitizenUser user = (CitizenUser) this.citizenUserRepository.findByUserName(userName);
-        return this.vaccinationRepository.findByUser(user);
+        List<Vaccination> vaccinations = new ArrayList<>();
+        this.vaccinationRepository.findByUser(user).forEach(vaccinations::add);
+        return new ResponseEntity<>(vaccinations, HttpStatus.OK);
     }
 
     @GetMapping(value = "/certificate",produces = MediaType.APPLICATION_PDF_VALUE)
@@ -117,6 +121,4 @@ public class UserController {
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(new InputStreamResource(bis));
     }
-
-
 }
