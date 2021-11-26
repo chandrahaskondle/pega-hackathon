@@ -38,5 +38,20 @@ public class User implements Serializable {
     @JoinColumn(referencedColumnName = "id")
     private Address address;
 
+    @Override
+    public int hashCode() {
+        return this.id;
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof User)) {
+            return false;
+        }
+        User user = (User) obj;
+        return this.id == user.id;
+    }
 }
