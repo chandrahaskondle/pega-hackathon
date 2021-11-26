@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,7 +25,7 @@ import java.util.Random;
 @CrossOrigin
 public class UserController {
 
-    static Random rand;
+    private static Random rand;
 
     @Autowired
     private CitizenUserRepository citizenUserRepository;
