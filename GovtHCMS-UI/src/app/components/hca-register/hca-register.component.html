@@ -1,4 +1,4 @@
-<div class="register-hcadmin-form">
+<div class="hca-register-form">
 
     <mdb-card>
         <mdb-card-header class="info-color white-text text-center py-4">
@@ -33,17 +33,14 @@
                     <label for="materialRegisterFormEmail">E-mail</label>
                 </div>
 
-                <div class="btn-group" mdbDropdown>
-                    <button mdbDropdownToggle mdbBtn color="info" class="dropdown-toggle waves-light"
-                        type="button" mdbWavesEffect>
-                        Select your HealthCare Institute
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item">Apollo Hospitals</a>
-                        <a class="dropdown-item">Care Hospitals</a>
-                        <a class="dropdown-item">Yashodha Hospitals</a>
-                    </div>
-                </div>
+                <mat-form-field appearance="fill" style="width: 250px;">
+                    <mat-label>Select an option</mat-label>
+                    <mat-select [(value)]="selectedHospital">
+                        <mat-option value="Apollo Hospitals">Apollo Hospitals</mat-option>
+                        <mat-option value="Care Hospitals">Care Hospitals</mat-option>
+                        <mat-option value="Yashodha Hospitals">Yashodha Hospitals</mat-option>
+                    </mat-select>
+                </mat-form-field>
 
                 <!-- Phone number -->
                 <div class="md-form">

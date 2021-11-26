@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-register-citizen',
-  templateUrl: './register-citizen.component.html',
-  styleUrls: ['./register-citizen.component.scss']
+  selector: 'app-citizen-register',
+  templateUrl: './citizen-register.component.html',
+  styleUrls: ['./citizen-register.component.scss']
 })
 export class RegisterCitizenComponent implements OnInit {
 
