@@ -33,4 +33,5 @@ public class Vaccination implements Serializable {
     private String location;
     private String notes;
     private boolean isVaccinated;
+    private int appointmentId;
 }

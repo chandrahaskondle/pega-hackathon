@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VaccinationRepository extends CrudRepository<Vaccination, Integer> {
     Vaccination[] findByUser(CitizenUser user);
+
+    Vaccination findByAppointmentId(Integer appointmentId);
 }

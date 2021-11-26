@@ -9,12 +9,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
-import java.util.Optional;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/user/citizen")
 @CrossOrigin
 public class UserController {
+
+    static Random rand;
 
     @Autowired
     private CitizenUserRepository citizenUserRepository;
@@ -73,8 +75,10 @@ public class UserController {
         vax.setDateOfRegistration(new Date());
         vax.setVaccine(vaccinationDrive.getVaccine());
         vax.setUser(user);
+        int appointmentId = rand.nextInt(100000);
+        vax.setAppointmentId(appointmentId);
         this.vaccinationRepository.save(vax);
-
+        //TODO send appointmentId as email/SMS to the citizen user
         return HttpStatus.OK.toString();
     }
 

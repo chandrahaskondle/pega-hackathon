@@ -23,9 +23,6 @@ public class HealthCareProviderController {
     private VaccinationRepository vaccinationRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private CertificateRepository certificateRepository;
 
     public String login() {
@@ -44,8 +41,17 @@ public class HealthCareProviderController {
         return HttpStatus.OK.toString();
     }
 
+    @PutMapping(path = "/appointment/{appointmentId}/vaccination", consumes = "application/json")
+    private String updateVaxHistoryForAnAppointment(@PathVariable Integer appointmentId) {
+        Vaccination vaccination = this.vaccinationRepository.findByAppointmentId(appointmentId);
+        vaccination.setDateOfVaccination(new Date());
+        vaccination.setVaccinated(true);
+        this.vaccinationRepository.save(vaccination);
+        return HttpStatus.OK.toString();
+    }
+
     @PostMapping(path = "/user/{userName}/certificate", consumes = "application/json")
-    public String createVaccinationCertificate(@PathVariable String healthCareProviderName,
+    public String generateCertificate(@PathVariable String healthCareProviderName,
                                            @PathVariable String userName,
                                            @RequestBody VaccinationDrive vaccinationDrive) {
         Certificate cert = new Certificate();
@@ -56,17 +62,6 @@ public class HealthCareProviderController {
         cert.setDateOfVaccination(new Date());
         cert.setAddress(vaccinationDrive.getAddress().toString());
         this.certificateRepository.save(cert);
-        return HttpStatus.OK.toString();
-    }
-
-    @PutMapping(path = "/user/{userName}/vaccination", consumes = "application/json")
-    private String updateVaccinationHistoryForUser(@PathVariable String userName) {
-        CitizenUser user = (CitizenUser) this.userRepository.findByUserName(userName);
-        Vaccination[] vaxArr = this.vaccinationRepository.findByUser(user);
-        Vaccination lastVaccination = vaxArr[vaxArr.length-1];
-        lastVaccination.setDateOfVaccination(new Date());
-        lastVaccination.setVaccinated(true);
-        this.vaccinationRepository.save(lastVaccination);
         return HttpStatus.OK.toString();
     }
 }
