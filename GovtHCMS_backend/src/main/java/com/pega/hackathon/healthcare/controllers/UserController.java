@@ -3,6 +3,7 @@ package com.pega.hackathon.healthcare.controllers;
 
 import com.pega.hackathon.healthcare.model.*;
 import com.pega.hackathon.healthcare.repositories.*;
+import com.pega.hackathon.healthcare.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -30,13 +31,20 @@ public class UserController {
     @Autowired
     private CertificateRepository certificateRepository;
 
+    @Autowired
+    private UserService userService;
+
     public String login() {
         return "";
     }
 
     @PostMapping(path = "/register", consumes = "application/json")
     public String register(@RequestBody CitizenUser citizenUser) {
-        this.citizenUserRepository.save(citizenUser);
+        userService.registerUser(citizenUser);
+        return HttpStatus.OK.toString();
+    }
+    @PostMapping(path = "/loginUser", consumes = "application/json")
+    public String loginUser(@RequestBody MyUserDetails myUserDetails) {
         return HttpStatus.OK.toString();
     }
 
