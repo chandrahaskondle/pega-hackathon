@@ -7,6 +7,7 @@ import com.pega.hackathon.aadharservice.repo.AadharRepo;
 import com.pega.hackathon.aadharservice.repo.OtpDetailsRepo;
 import com.pega.hackathon.aadharservice.service.AadharService;
 import com.pega.hackathon.aadharservice.service.EmailService;
+import com.pega.hackathon.aadharservice.service.SmsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,9 @@ public class AadharServiceImpl implements AadharService {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private SmsServiceImpl smsService;
+
     @Override
     public String sendOtp(String aadharNumber) {
         Aadhar aadharByAadharNumber = aadharRepo.findByAadharNumber(aadharNumber);
@@ -43,6 +47,7 @@ public class AadharServiceImpl implements AadharService {
             emailService.sendEmail(aadharByAadharNumber.getEmailId(), String.valueOf(otp));
             otpDetails.setModeOfCommunication("EMAIL");
             otpDetails.setIsEmailSent(true);
+            smsService.sendSms(aadharByAadharNumber.getPhoneNumber(), String.valueOf(otp));
             otpDetailsRepo.save(otpDetails);
         } else {
             return "Invalid Aadhar Number";
