@@ -36,6 +36,7 @@ dependencies {
     implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.69'
     implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
     implementation group: 'com.itextpdf', name: 'html2pdf', version: '4.0.0'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.6.0'
 
 
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'

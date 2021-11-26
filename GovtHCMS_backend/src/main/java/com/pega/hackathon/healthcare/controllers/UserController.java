@@ -3,6 +3,7 @@ package com.pega.hackathon.healthcare.controllers;
 
 import com.pega.hackathon.healthcare.model.*;
 import com.pega.hackathon.healthcare.repositories.*;
+import com.pega.hackathon.healthcare.service.EmailService;
 import com.pega.hackathon.healthcare.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -42,6 +43,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EmailService emailService;
 
     public String login() {
         return "";
@@ -86,7 +90,7 @@ public class UserController {
         int appointmentId = rand.nextInt(100000);
         vax.setAppointmentId(appointmentId);
         this.vaccinationRepository.save(vax);
-        //TODO send appointmentId as email/SMS to the citizen user
+        emailService.sendEmail(user.getEmailAddress(), appointmentId);
         return HttpStatus.OK.toString();
     }
 
