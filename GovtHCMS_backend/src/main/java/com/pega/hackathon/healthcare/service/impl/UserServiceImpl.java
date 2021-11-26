@@ -4,8 +4,11 @@ import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.text.*;
 import com.pega.hackathon.healthcare.model.CitizenUser;
+import com.pega.hackathon.healthcare.model.HealthCareProvider;
+import com.pega.hackathon.healthcare.model.User;
 import com.pega.hackathon.healthcare.model.Vaccination;
 import com.pega.hackathon.healthcare.repositories.CitizenUserRepository;
+import com.pega.hackathon.healthcare.repositories.HealthCareProviderRepository;
 import com.pega.hackathon.healthcare.repositories.VaccinationRepository;
 import com.pega.hackathon.healthcare.service.UserService;
 import org.apache.commons.io.FileUtils;
@@ -27,6 +30,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private CitizenUserRepository citizenUserRepository;
+
+    @Autowired
+    private HealthCareProviderRepository healthCareProviderRepository;
+
 
     @Autowired
     private VaccinationRepository vaccinationRepository;
@@ -56,4 +63,13 @@ public class UserServiceImpl implements UserService {
                 new FileOutputStream(pdfDest), converterProperties);
         return new ByteArrayInputStream(Files.readAllBytes(pdfDest.toPath()));
     }
+
+    @Override
+    public void save(Vaccination vaccination, CitizenUser user, String healthCareProviderUserName) {
+        HealthCareProvider healthCareProvider = (HealthCareProvider) healthCareProviderRepository.findByUserName(healthCareProviderUserName);
+        vaccination.setUser(user);
+        vaccination.setHealthCareProvider(healthCareProvider);
+        vaccinationRepository.save(vaccination);
+    }
 }
+

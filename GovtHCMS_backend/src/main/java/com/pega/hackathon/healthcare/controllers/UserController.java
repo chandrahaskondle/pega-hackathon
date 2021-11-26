@@ -11,6 +11,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
@@ -70,8 +72,9 @@ public class UserController {
     }
 
     @PostMapping(path = "/{userName}/vaccination/history", consumes = "application/json")
-    private String createVaccinationHistory(@PathVariable String userName, @RequestBody Vaccination vaccination) {
-        this.vaccinationRepository.save(vaccination);
+    private String createVaccinationHistory(@PathVariable String healthCareProviderUserName, @RequestBody Vaccination vaccination) {
+        CitizenUser user = (CitizenUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        this.userService.save(vaccination,user,healthCareProviderUserName);
         return HttpStatus.OK.toString();
     }
 
@@ -111,6 +114,8 @@ public class UserController {
 
     @GetMapping(value = "/certificate",produces = MediaType.APPLICATION_PDF_VALUE)
     private ResponseEntity getVaccinationCertificate(@RequestParam int certificateId) throws IOException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(authentication.getPrincipal().toString());
         ByteArrayInputStream bis = this.userService.generatePDF(certificateId);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=citiesreport.pdf");

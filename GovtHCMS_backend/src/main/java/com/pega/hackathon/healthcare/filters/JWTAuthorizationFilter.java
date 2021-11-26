@@ -3,8 +3,15 @@ package com.pega.hackathon.healthcare.filters;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.pega.hackathon.healthcare.constants.SecurityConstants;
+import com.pega.hackathon.healthcare.model.CitizenUser;
+import com.pega.hackathon.healthcare.model.HealthCareProvider;
+import com.pega.hackathon.healthcare.model.User;
+import com.pega.hackathon.healthcare.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -14,11 +21,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-    public JWTAuthorizationFilter(AuthenticationManager authManager) {
+    private UserRepository userRepository;
+
+    public JWTAuthorizationFilter(AuthenticationManager authManager, UserRepository userRepository) {
         super(authManager);
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -44,14 +56,23 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
         if (token != null) {
             // parse the token.
-            String user = JWT.require(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()))
+            String userName = JWT.require(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()))
                     .build()
                     .verify(token.replace(SecurityConstants.TOKEN_PREFIX, ""))
                     .getSubject();
+            User user = userRepository.findByUserName(userName);
+            List<GrantedAuthority> roles;
+            if (user instanceof CitizenUser) {
+                roles = Collections.singletonList(new SimpleGrantedAuthority("citizen"));
+            } else if (user instanceof HealthCareProvider) {
+                roles = Collections.singletonList(new SimpleGrantedAuthority("provider"));
+            } else {
+                roles = Collections.singletonList(new SimpleGrantedAuthority("admin"));
+            }
 
-            if (user != null) {
+            if (userName != null) {
                 // new arraylist means authorities
-                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+                return new UsernamePasswordAuthenticationToken(user, null, roles);
             }
 
             return null;
