@@ -1,5 +1,8 @@
 package com.pega.hackathon.healthcare.service.impl;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+
 public class SmsService {
 
     public static final String ACCOUNT_SID = System.getenv("TWILIO_ACCOUNT_SID");
@@ -13,6 +16,6 @@ public class SmsService {
                         "Where's Wallace?")
                 .create();
 
-        System.out.println(message.getSid());
+       // System.out.println(message.getSid());
     }
 }
