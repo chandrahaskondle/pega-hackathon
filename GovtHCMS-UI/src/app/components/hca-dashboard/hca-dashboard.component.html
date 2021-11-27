@@ -1,1 +1,22 @@
-<p>hca-dashboard works!</p>
+<div class="card">
+    <div class="card-body display-flex-vertical">
+        <p style="font-size: 26px; font-weight: 600; color: #3fa59a;"> Create Vaccination Drive:</p>
+        <form class="text-center border border-light p-5">
+            <select class="browser-default custom-select mb-4">
+                <option value="" selected disabled>Select Vaccine</option>
+                <option value="2">Covaxin</option>
+                <option value="3">Covishield</option>
+                <option value="3">Sputnik</option>
+                <option value="4">Pfizer</option>
+            </select>
+            <input type="text" id="illness" class="form-control mb-4" placeholder="Enter your Pincode">
+            <textarea id="illness" class="form-control mb-4" placeholder="Enter HealthCare Address"></textarea>
+            <div class="display-flex">
+                Vaccination Date:
+                <input style="width: 75%; margin-left: 5px;" type="date" id="date2" class="form-control">
+            </div>
+            <br>
+            <button type="button" class="btn btn-primary btn-sm">Submit</button>
+        </form>
+    </div>
+</div>
